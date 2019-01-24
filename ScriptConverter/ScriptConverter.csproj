@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3F560E64-ACCE-4520-B3E7-EA6502E20F49}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScriptConverter</RootNamespace>
+    <AssemblyName>ScriptConverter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AstPrinter.cs" />
+    <Compile Include="Ast\Declarations\FieldDeclaration.cs" />
+    <Compile Include="Ast\Declarations\Declaration.cs" />
+    <Compile Include="Ast\Declarations\IncludeDeclaration.cs" />
+    <Compile Include="Ast\Declarations\InheritsDeclaration.cs" />
+    <Compile Include="Ast\Declarations\MethodDeclaration.cs" />
+    <Compile Include="Ast\Expressions\ArrayInitializerExpression.cs" />
+    <Compile Include="Ast\Expressions\BinaryOperatorExpression.cs" />
+    <Compile Include="Ast\Expressions\BoolExpression.cs" />
+    <Compile Include="Ast\Expressions\CallExpression.cs" />
+    <Compile Include="Ast\Expressions\CastExpression.cs" />
+    <Compile Include="Ast\Expressions\Expression.cs" />
+    <Compile Include="Ast\Expressions\FieldExpression.cs" />
+    <Compile Include="Ast\Expressions\IdentifierExpression.cs" />
+    <Compile Include="Ast\Expressions\IndexerExpression.cs" />
+    <Compile Include="Ast\Expressions\InstanceOfExpression.cs" />
+    <Compile Include="Ast\Expressions\NewExpression.cs" />
+    <Compile Include="Ast\Expressions\NullExpression.cs" />
+    <Compile Include="Ast\Expressions\NumberExpression.cs" />
+    <Compile Include="Ast\Expressions\PostfixOperatorExpression.cs" />
+    <Compile Include="Ast\Expressions\PrefixOperatorExpression.cs" />
+    <Compile Include="Ast\Expressions\StringExpression.cs" />
+    <Compile Include="Ast\Expressions\TernaryExpression.cs" />
+    <Compile Include="Ast\IAstVisitor.cs" />
+    <Compile Include="Ast\Statements\BlockStatement.cs" />
+    <Compile Include="Ast\Statements\BreakStatement.cs" />
+    <Compile Include="Ast\Statements\ContinueStatement.cs" />
+    <Compile Include="Ast\Statements\DoStatement.cs" />
+    <Compile Include="Ast\Statements\EmptyStatement.cs" />
+    <Compile Include="Ast\Statements\ForStatement.cs" />
+    <Compile Include="Ast\Statements\IfStatement.cs" />
+    <Compile Include="Ast\Statements\NakedStatement.cs" />
+    <Compile Include="Ast\Statements\ReturnStatement.cs" />
+    <Compile Include="Ast\Statements\Statement.cs" />
+    <Compile Include="Ast\Statements\SwitchStatement.cs" />
+    <Compile Include="Ast\Statements\ThrowStatement.cs" />
+    <Compile Include="Ast\Statements\TryStatement.cs" />
+    <Compile Include="Ast\Statements\VariableStatement.cs" />
+    <Compile Include="Ast\Statements\WhileStatement.cs" />
+    <Compile Include="CoreAnnotations.cs" />
+    <Compile Include="GenericComparer.cs" />
+    <Compile Include="IndentTextWriter.cs" />
+    <Compile Include="Ast\Document.cs" />
+    <Compile Include="Parser\CompilerError.cs" />
+    <Compile Include="Parser\CompilerException.cs" />
+    <Compile Include="Parser\Lexer.cs" />
+    <Compile Include="Parser\Lexer.Static.cs" />
+    <Compile Include="Parser\LexerException.cs" />
+    <Compile Include="Parser\Parselets\Declarations\ConstParselet.cs" />
+    <Compile Include="Parser\Parselets\Declarations\InheritsParselet.cs" />
+    <Compile Include="Parser\Parselets\Declarations\MethodParselet.cs" />
+    <Compile Include="Parser\Parselets\Declarations\PublicParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\ArrayInitializerParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\BinaryOperatorParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\BoolParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\CallParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\FieldParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\GroupParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\HashParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\IndexerParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\NewParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\NullParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\NumberParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\PostfixOperatorParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\PrefixOperatorParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\StringParselet.cs" />
+    <Compile Include="Parser\Parselets\IDeclarationParselet.cs" />
+    <Compile Include="Parser\Parselets\Declarations\IncludeParselet.cs" />
+    <Compile Include="Parser\Parselets\IInfixParselet.cs" />
+    <Compile Include="Parser\Parselets\IPrefixParselet.cs" />
+    <Compile Include="Parser\Parselets\IStatementParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\IdentifierParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\BlockParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\BreakParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\ConstVariableParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\ContinueParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\DoParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\EmptyParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\ForParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\IfParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\InstanceOfParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\ReturnParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\SwitchParselet.cs" />
+    <Compile Include="Parser\Parselets\Expressions\TernaryParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\ThrowParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\TryParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\VariableParselet.cs" />
+    <Compile Include="Parser\Parselets\Statements\WhileParselet.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\PrecedenceValue.cs" />
+    <Compile Include="Parser\ScriptLexer.cs" />
+    <Compile Include="Parser\ScriptLexer.Static.cs" />
+    <Compile Include="Parser\ScriptParser.cs" />
+    <Compile Include="Parser\ScriptParser.Static.cs" />
+    <Compile Include="Parser\SourcePosition.cs" />
+    <Compile Include="Parser\Token.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ast\ScriptType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
