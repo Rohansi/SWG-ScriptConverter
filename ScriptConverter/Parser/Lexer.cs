@@ -10,6 +10,8 @@ namespace ScriptConverter.Parser
     abstract partial class Lexer<TToken, TTokenType> : IEnumerable<TToken>
            where TToken : Token<TTokenType>
     {
+        private static readonly char[] UnimportantTrivia = { ' ', '\t', };
+
         protected delegate bool LexerRule(char ch, out TToken token);
 
         private readonly IEnumerable<char> _sourceEnumerable;
@@ -48,6 +50,8 @@ namespace ScriptConverter.Parser
             if (EofToken == null)
                 throw new Exception("EofToken must be set");
 
+            var pendingTrivia = new StringBuilder();
+
             _length = int.MaxValue;
             _source = _sourceEnumerable.GetEnumerator();
             _read = new List<char>(16);
@@ -59,9 +63,9 @@ namespace ScriptConverter.Parser
 
             while (_index < _length)
             {
-                SkipWhiteSpace();
+                SkipWhiteSpace(pendingTrivia);
 
-                if (SkipComment())
+                if (SkipComment(pendingTrivia, out _))
                     continue;
 
                 if (_index >= _length)
@@ -73,8 +77,22 @@ namespace ScriptConverter.Parser
                 var ch = PeekChar();
                 TToken token = null;
 
+                var leadingTrivia = pendingTrivia.ToString().TrimStart(UnimportantTrivia);
+                pendingTrivia.Clear();
+
                 if (!Rules.Any(rule => rule(ch, out token)))
                     throw Error("Unexpected character '{0}'", ch);
+
+                do
+                {
+                    SkipWhiteSpace(pendingTrivia, true);
+                } while (SkipComment(pendingTrivia, out var wasMultiline) && !wasMultiline);
+
+                var trailingTrivia = pendingTrivia.ToString();
+                pendingTrivia.Clear();
+
+                token.LeadingTrivia = leadingTrivia;
+                token.TrailingTrivia = trailingTrivia;
 
                 yield return token;
             }
@@ -83,21 +101,25 @@ namespace ScriptConverter.Parser
                 yield return EofToken;
         }
 
-        protected virtual bool SkipComment()
+        protected virtual bool SkipComment(StringBuilder sb, out bool isMultiline)
         {
+            isMultiline = false;
             return false;
         }
 
-        protected void SkipWhiteSpace()
+        protected void SkipWhiteSpace(StringBuilder sb, bool stopAtNewLine = false)
         {
             while (_index < _length)
             {
                 var ch = PeekChar();
 
+                if (stopAtNewLine && (ch == '\n' || ch == '\r'))
+                    break;
+
                 if (!char.IsWhiteSpace(ch))
                     break;
 
-                TakeChar();
+                sb.Append(TakeChar());
             }
         }
 

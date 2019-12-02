@@ -16,7 +16,7 @@ namespace ScriptConverter
         {
             _basePath = Path.GetFullPath(".").TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
 
-            /*var text = File.ReadAllText(@"E:\Desktop\ScriptConverter\ScriptConverter\bin\Debug\script\systems\combat\combat_base.script");
+            var text = File.ReadAllText(@"C:\Users\rohan\Desktop\script\systems\combat\combat_base.script");
             var lexer = new ScriptLexer(text, "combat_base");
             var parser = new ScriptParser(Preprocessor(lexer, "DEBUG"));
             var document = parser.ParseAll();
@@ -25,8 +25,8 @@ namespace ScriptConverter
             {
                 var printer = new AstPrinter(output, "package", "name", false);
                 printer.Visit(document);
-            }*/
-
+            }
+            /*
             var scriptPaths =
                 Directory.EnumerateFiles(_basePath, "*.script", SearchOption.AllDirectories)
                 .Concat(Directory.EnumerateFiles(_basePath, "*.scriptlib", SearchOption.AllDirectories))
@@ -52,7 +52,7 @@ namespace ScriptConverter
                     var printer = new AstPrinter(output, outputPath.Replace('\\', '.'), outputName, isLibrary);
                     printer.Visit(document);
                 }
-            }
+            }*/
         }
 
         static Document Load(string path)

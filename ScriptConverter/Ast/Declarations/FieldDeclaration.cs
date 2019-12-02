@@ -11,6 +11,12 @@ namespace ScriptConverter.Ast.Declarations
         public bool IsConstant { get; private set; }
         public bool IsPublic { get; private set; }
 
+        public ScriptToken ModifierToken { get; set; }
+        public ScriptToken TypeToken { get; set; }
+        public ScriptToken NameToken { get; set; }
+        public ScriptToken AssignmentToken { get; set; }
+        public ScriptToken SemicolonToken { get; set; }
+
         public FieldDeclaration(ScriptToken start, ScriptToken end, ScriptType type, string name, Expression value, bool isConst, bool isPublic)
             : base(start, end)
         {

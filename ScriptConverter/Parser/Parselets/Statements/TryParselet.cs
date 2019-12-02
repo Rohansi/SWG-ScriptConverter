@@ -15,17 +15,20 @@ namespace ScriptConverter.Parser.Parselets.Statements
 
             do
             {
-                parser.Take(ScriptTokenType.Catch);
+                var catchToken = parser.Take(ScriptTokenType.Catch);
                 parser.Take(ScriptTokenType.LeftParen);
 
-                ScriptType type;
-                string name;
-                parser.ParseNamedType(out type, out name);
+                parser.ParseNamedType(out var type, out var name, out var typeToken, out var nameToken);
 
                 parser.Take(ScriptTokenType.RightParen);
 
                 var block = parser.ParseBlock(false);
-                catches.Add(new TryStatement.Branch(type, name, block));
+                catches.Add(new TryStatement.Branch(type, name, block)
+                {
+                    TypeToken = typeToken,
+                    NameToken = nameToken,
+                    CatchToken = catchToken,
+                });
             } while (parser.Match(ScriptTokenType.Catch));
 
             return new TryStatement(token, parser.Previous, mainBlock, catches);

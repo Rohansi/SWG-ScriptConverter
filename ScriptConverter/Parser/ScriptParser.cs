@@ -16,15 +16,18 @@ namespace ScriptConverter.Parser
 
         }
 
-        public void ParseNamedType(out ScriptType type, out string name)
+        public void ParseNamedType(out ScriptType type, out string name, out ScriptToken typeToken, out ScriptToken nameToken)
         {
-            ParseNamedType(Take(), out type, out name);
+            typeToken = Take();
+            ParseNamedType(typeToken, out type, out name, out nameToken);
         }
 
-        public void ParseNamedType(ScriptToken token, out ScriptType type, out string name)
+        public void ParseNamedType(ScriptToken token, out ScriptType type, out string name, out ScriptToken nameToken)
         {
             type = ParseType(token);
-            name = Take(ScriptTokenType.Identifier).Contents;
+
+            nameToken = Take(ScriptTokenType.Identifier);
+            name = nameToken.Contents;
 
             var arrayDims = 0;
             while (MatchAndTake(ScriptTokenType.LeftSquare))

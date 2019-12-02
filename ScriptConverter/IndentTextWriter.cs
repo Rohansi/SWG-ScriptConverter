@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text;
+using ScriptConverter.Parser;
 
 namespace ScriptConverter
 {
@@ -58,6 +59,16 @@ namespace ScriptConverter
         {
             for (var i = 0; i < Indent; i++)
                 Write(_indentStr);
+        }
+
+        internal void WriteLeading(ScriptToken token)
+        {
+            Write(token?.LeadingTrivia);
+        }
+
+        internal void WriteTrailing(ScriptToken token)
+        {
+            Write(token?.TrailingTrivia);
         }
     }
 }

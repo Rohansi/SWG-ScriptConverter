@@ -14,6 +14,10 @@ namespace ScriptConverter.Ast.Statements
             public string Name { get; private set; }
             public Expression Value { get; private set; }
 
+            public ScriptToken TypeToken { get; set; }
+            public ScriptToken NameToken { get; set; }
+            public ScriptToken AssignmentToken { get; set; }
+
             public Definition(ScriptType type, string name, Expression value)
             {
                 Type = type;
@@ -24,7 +28,10 @@ namespace ScriptConverter.Ast.Statements
 
         public ScriptType BaseType { get; private set; }
         public bool Final { get; private set; }
-        public ReadOnlyCollection<Definition> Definitions { get; private set; } 
+        public ReadOnlyCollection<Definition> Definitions { get; private set; }
+
+        public ScriptToken ModifierToken { get; set; }
+        public ScriptToken SemicolonToken { get; set; }
 
         public VariableStatement(ScriptToken start, ScriptToken end, ScriptType baseType, bool final, List<Definition> definitions)
             : base(start, end)

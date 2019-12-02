@@ -13,6 +13,10 @@ namespace ScriptConverter.Ast.Statements
             public string Name { get; private set; }
             public BlockStatement Block { get; private set; }
 
+            public ScriptToken TypeToken { get; set; }
+            public ScriptToken NameToken { get; set; }
+            public ScriptToken CatchToken { get; set; }
+
             public Branch(ScriptType type, string name, BlockStatement block)
             {
                 Type = type;

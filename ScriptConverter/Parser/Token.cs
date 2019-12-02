@@ -8,6 +8,8 @@
 
         public readonly T Type;
         public readonly string Contents;
+        public string LeadingTrivia;
+        public string TrailingTrivia;
 
         protected Token(string fileName, SourcePosition start, SourcePosition end, T type, string contents)
         {

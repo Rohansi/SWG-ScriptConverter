@@ -114,18 +114,32 @@ namespace ScriptConverter
         {
             Declare(declaration.Name, declaration.Type);
 
+            _writer.WriteLeading(declaration.ModifierToken);
             if (declaration.IsPublic)
-                _writer.Write("public ");
-
+                _writer.Write("public");
+            if (declaration.IsPublic && declaration.IsConstant)
+                _writer.Write(' ');
             if (declaration.IsConstant)
-                _writer.Write("static final ");
+                _writer.Write("static final");
+            _writer.WriteTrailing(declaration.ModifierToken);
 
+            _writer.WriteLeading(declaration.TypeToken);
             _writer.Write(declaration.Type);
-            _writer.Write(" ");
+            _writer.WriteTrailing(declaration.TypeToken);
+            
+            _writer.WriteLeading(declaration.NameToken);
             _writer.Write(declaration.Name);
-            _writer.Write(" = ");
+            _writer.WriteTrailing(declaration.NameToken);
+
+            _writer.WriteLeading(declaration.AssignmentToken);
+            _writer.Write("=");
+            _writer.WriteTrailing(declaration.AssignmentToken);
+
             declaration.Value.Accept(this);
-            _writer.WriteLine(";");
+
+            _writer.WriteLeading(declaration.SemicolonToken);
+            _writer.Write(";");
+            _writer.WriteTrailing(declaration.SemicolonToken);
             return 0;
         }
 

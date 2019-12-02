@@ -26,9 +26,7 @@ namespace ScriptConverter.Parser.Parselets.Declarations
                 if (parser.Match(ScriptTokenType.RightParen))
                     return null;
 
-                ScriptType paramType;
-                string paramName;
-                parser.ParseNamedType(out paramType, out paramName);
+                parser.ParseNamedType(out var paramType, out var paramName, out var typeToken, out var nameToken);
 
                 return new MethodDeclaration.Parameter(paramType, paramName);
             }).ToList();

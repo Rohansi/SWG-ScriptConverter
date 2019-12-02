@@ -1,5 +1,4 @@
-﻿using ScriptConverter.Ast;
-using ScriptConverter.Ast.Declarations;
+﻿using ScriptConverter.Ast.Declarations;
 
 namespace ScriptConverter.Parser.Parselets.Declarations
 {
@@ -7,17 +6,22 @@ namespace ScriptConverter.Parser.Parselets.Declarations
     {
         public Declaration Parse(ScriptParser parser, ScriptToken token)
         {
-            ScriptType type;
-            string name;
-            parser.ParseNamedType(out type, out name);
+            parser.ParseNamedType(out var type, out var name, out var typeToken, out var nameToken);
 
-            parser.Take(ScriptTokenType.Assign);
+            var assignmentToken = parser.Take(ScriptTokenType.Assign);
 
             var value = parser.ParseExpression();
 
-            parser.Take(ScriptTokenType.Semicolon);
+            var semicolonToken = parser.Take(ScriptTokenType.Semicolon);
 
-            return new FieldDeclaration(token, parser.Previous, type, name, value, true, true);
+            return new FieldDeclaration(token, parser.Previous, type, name, value, true, true)
+            {
+                ModifierToken = token,
+                TypeToken = typeToken,
+                NameToken = nameToken,
+                AssignmentToken = assignmentToken,
+                SemicolonToken = semicolonToken,
+            };
         }
     }
 }

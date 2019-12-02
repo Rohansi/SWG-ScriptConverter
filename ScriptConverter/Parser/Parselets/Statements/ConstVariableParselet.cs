@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ScriptConverter.Ast;
 using ScriptConverter.Ast.Statements;
 
 namespace ScriptConverter.Parser.Parselets.Statements
@@ -10,20 +9,26 @@ namespace ScriptConverter.Parser.Parselets.Statements
         {
             trailingSemicolon = true;
 
-            ScriptType type;
-            string name;
-            parser.ParseNamedType(out type, out name);
+            parser.ParseNamedType(out var type, out var name, out var typeToken, out var nameToken);
 
-            parser.Take(ScriptTokenType.Assign);
+            var assignmentToken = parser.Take(ScriptTokenType.Assign);
 
             var value = parser.ParseExpression();
 
             var definitions = new List<VariableStatement.Definition>()
             {
                 new VariableStatement.Definition(type, name, value)
+                {
+                    TypeToken = typeToken,
+                    NameToken = nameToken,
+                    AssignmentToken = assignmentToken,
+                },
             };
 
-            return new VariableStatement(token, parser.Previous, type, true, definitions);
+            return new VariableStatement(token, parser.Previous, type, true, definitions)
+            {
+                ModifierToken = token,
+            };
         }
     }
 }

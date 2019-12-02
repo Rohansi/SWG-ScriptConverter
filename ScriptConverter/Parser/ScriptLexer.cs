@@ -19,31 +19,56 @@ namespace ScriptConverter.Parser
             };
         }
 
-        protected override bool SkipComment()
+        protected override bool SkipComment(StringBuilder sb, out bool isMultiline)
         {
             if (TakeIfNext("//"))
             {
+                isMultiline = true; // this comment eats the rest of this line + the newline character
+                sb.Append("//");
+
                 while (true)
                 {
                     var ch = TakeChar();
-                    if (ch == '\0' || ch == '\n' || ch == '\r')
+                    if (ch == '\0')
+                        return true;
+
+                    sb.Append(ch);
+
+                    if (ch == '\r' && PeekChar() == '\n')
+                    {
+                        sb.Append(TakeChar()); // \n
+                        return true;
+                    }
+
+                    if (ch == '\n' || ch == '\r')
                         return true;
                 }
             }
 
             if (TakeIfNext("/*"))
             {
+                isMultiline = false;
+                sb.Append("/*");
+
                 while (true)
                 {
                     if (TakeIfNext("*/"))
+                    {
+                        sb.Append("*/");
                         return true;
+                    }
 
                     var ch = TakeChar();
+                    
+                    if (ch == '\n' || ch == '\r')
+                        isMultiline = true;
+
                     if (ch == '\0')
                         return true;
                 }
             }
 
+            isMultiline = false;
             return false;
         }
 
